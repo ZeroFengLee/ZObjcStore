@@ -4,7 +4,7 @@ ZObjcStore是一个轻量级的对象存储框架。
 
 # 适用于
 
-假如你的项目当中有很多的零散信息需要持久化,数据量少，但是分散。还不至于使用数据库这种庞大的存储框架的时候，PieceStore也许非常适合你
+假如你的项目当中有很多的零散信息需要持久化,数据量少，但是分散。还不至于使用数据库这种庞大的存储框架的时候，ZObjcStore也许非常适合你
 
 # 特性
 
@@ -17,7 +17,7 @@ ZObjcStore是一个轻量级的对象存储框架。
 ###Podfile
 在podfile中添加ZObjcStore依赖
 ```objectivec
-pod 'PieceStore', '~> 1.0.0'
+pod 'ZObjcStore', '~> 1.0.1'
 ```
 然后运行pod 更新
 ```objectivec
@@ -28,16 +28,24 @@ $ pod install
 
 ###基础用法
 
- 假如项目有个需求，需要存储用户的信息，在没有网络的情况下也可以显示
+ >导入头文件
+ ```objectivec
+#import <ZObjcStore/ZCodingSupport.h>   
+#import <ZObjcStore/ZObjcStore.h>   
+}
  
-##### 定一个UserInfo模型
+##### 定一个Student模型
 
- > 注意: 存储的Model类一定要继承`CodingSupport`。   
+ > 注意: 存储的Model类一定要继承`ZCodingSupport`。   
 
 ```objectivec
-class UserInfo: CodingSupport {
-    var username: String = "default" //用户名
-    var userSex: Bool = true //用户性别
+@interface Student : ZCodingSupport
+
+@property (nonatomic, strong) NSString *name;
+
+@property (nonatomic, assign) int age;
+
+@end
 }
 ```
 
@@ -45,29 +53,25 @@ class UserInfo: CodingSupport {
 
 ```objectivec 
 //更新用户名
-func updateUserInfoName(name: String) {
-    PieceStore.update(UserInfo.self, value: name, key: "username")
-}
-//更新用户性别
-func updateUserInfoSex(sex: Bool) {
-    PieceStore.update(UserInfo.self, value: sex, key: "userSex")
++ (void)updateStudentName:(NSString *)name {
+    [ZObjcStore update:[Student class] value:name key:@"name"];
 }
 ```
 
 ##### 获取用户信息
 
 ```objectivec 
-func getUserInfoName() -> String {
-    return PieceStore.get(UserInfo.self, key: "username") as! String
++ (NSString *)studentName {
+    return [ZObjcStore get:[Student class] key:@"name"];
 }
 ```
 
 ### 进阶用法
 
 我们上面已经存储量用户的相关信息，但是每个用户的信息是不一样的，App由｀User_A｀切换到了｀User_B｀账户，B账户肯定不需要A账户的存储信息，而且当｀User_B｀再切回｀User_A｀的时候，项目要保证A账户的信息还在。
-> 这个时候，你可以考虑使用PieceStore的分管理用户存储功能 `handleContext` ， handleContext方法可以在不同管理用户间快速切换，但是注意，同一时间只能存在一个管理用户。
+> 这个时候，你可以考虑使用ZObjcStore的分管理用户存储功能 `handleContext` ， handleContext方法可以在不同管理用户间快速切换，但是注意，同一时间只能存在一个管理用户。
 ```objectivec 
-func handleContext(id: String) {
-    PieceStore.handleContext(id)
++ (void)handleContext:(NSString *)userId {
+    [ZObjcStore handleContext:userId];
 }
 ```
