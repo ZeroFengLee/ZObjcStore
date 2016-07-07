@@ -32,7 +32,7 @@ $ pod install
  ```objectivec
 #import <ZObjcStore/ZCodingSupport.h>   
 #import <ZObjcStore/ZObjcStore.h>   
-}
+```
  
 ##### 定一个Student模型
 
@@ -46,7 +46,6 @@ $ pod install
 @property (nonatomic, assign) int age;
 
 @end
-}
 ```
 
 ##### 更新用户信息
@@ -70,6 +69,7 @@ $ pod install
 
 我们上面已经存储量用户的相关信息，但是每个用户的信息是不一样的，App由｀User_A｀切换到了｀User_B｀账户，B账户肯定不需要A账户的存储信息，而且当｀User_B｀再切回｀User_A｀的时候，项目要保证A账户的信息还在。
 > 这个时候，你可以考虑使用ZObjcStore的分管理用户存储功能 `handleContext` ， handleContext方法可以在不同管理用户间快速切换，但是注意，同一时间只能存在一个管理用户。
+
 ```objectivec 
 + (void)handleContext:(NSString *)userId {
     [ZObjcStore handleContext:userId];
