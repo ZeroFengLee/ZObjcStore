@@ -21,7 +21,7 @@ ZObjcStore是一个轻量级的对象存储框架。
 ###Podfile
 在podfile中添加ZObjcStore依赖
 ```objectivec
-pod 'ZObjcStore', '~> 1.0.1'
+pod 'ZObjcStore', '~> 1.0.2'
 ```
 然后运行pod 更新
 ```objectivec
@@ -50,6 +50,21 @@ $ pod install
 @property (nonatomic, assign) int age;
 
 @end
+```
+
+##### 更新整个Model
+
+```objectivec
++ (void)updateStudent:(Student *)stu {
+    [ZobjcStore saveInfo: stu];
+}
+```
+
+##### 获取整个Model
+```objectivec
++ (void)getStudent:(Class)cls {
+    [ZobjcStore getInfo: cls];
+}
 ```
 
 ##### 更新用户信息
