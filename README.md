@@ -62,8 +62,8 @@ $ pod install
 
 ##### 获取整个Model
 ```objectivec
-+ (void)getStudent:(Class)cls {
-    [ZobjcStore getInfo: cls];
++ (Student *)getStudent:(Class)cls {
+    return [ZobjcStore getInfo: cls];
 }
 ```
 
