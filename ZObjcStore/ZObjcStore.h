@@ -21,8 +21,17 @@
 + (void)update:(Class)modelClass value:(id)value key:(NSString *)key;
 
 /*
- @function   获取信息
+    @function   获取信息
  */
 + (id)get:(Class)modelClass key:(NSString *)key;
 
+/*
+    @function   保存Model对象
+ */
++ (void)saveInfo:(id)objc;
+
+/*
+    @function 获取Model对象
+ */
++ (id)getInfo:(Class)cls;
 @end
